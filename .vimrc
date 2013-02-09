@@ -16,9 +16,16 @@ set gdefault
 set encoding=utf-8 nobomb
 " Change mapleader
 let mapleader=","
+" Task list for TODOs
+map <leader>td <Plug>TaskList
+" pep8
+let g:pep8_map='<leader>8'
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
+" Increase history and undo buffers
+set history=1000
+set undolevels=1000
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
@@ -38,8 +45,10 @@ set number
 syntax on
 " Highlight current line
 set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
+" Make tabs as wide as 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
@@ -72,9 +81,14 @@ if exists("&relativenumber")
 	set relativenumber
 	au BufReadPost * set relativenumber
 endif
+" Enable code folding for python
+set foldmethod=indent
+set foldlevel=99
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
+" Mutt wrap length:
+au BufRead /tmp/mutt-* set tw=80
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
 	let save_cursor = getpos(".")
@@ -90,7 +104,7 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Automatic commands
 if has("autocmd")
 	" Enable file type detection
-	filetype on
+	filetype plugin indent on 
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 endif
